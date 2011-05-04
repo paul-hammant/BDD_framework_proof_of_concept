@@ -9,7 +9,7 @@ Notable Shortcomings
 
 Differences to JB 3.x
 
-5) Before and After are a chain or pairs (either side of the pair is optional).
+5) Before and After are a chain of before+after pairs (either side of the pair is optional).
 6) Meta filtering successfully excludes Before/AfterStory as well as Story
 7) Steps collecting work on classes, not instances of steps POJO
    - one test proves the chronalogically later instantiation (or getting) of an instance to invoke the methods of
