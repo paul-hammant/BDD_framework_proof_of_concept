@@ -112,14 +112,14 @@ public class EvolvingDogfoodTest {
 
         LittleEventLanguage monitor = new LittleEventLanguage();
 
-        Scenario scenario = new ScenarioFactory(new Class<?>[] {SampleStepsPojo.class},
-                "Given passing scenario 'scenarioA'",
-                "Given a containing before and after scenario '[' & ']' that passes",
-                "Given a containing before and after scenario '{' & '}' that passes",
-                "Given a containing before and after scenario '<' & '>' that passes",
-                "When scenario are performed",
-                "Then failure should result",
-                "Then the order of events should be '<✓ {✓ [✓ scenarioA✗ ]✓ }✓ >✓'")
+        Scenario scenario = new ScenarioFactory(SampleStepsPojo.class)
+                .withSteps("Given passing scenario 'scenarioA'",
+                           "Given a containing before and after scenario '[' & ']' that passes",
+                           "Given a containing before and after scenario '{' & '}' that passes",
+                           "Given a containing before and after scenario '<' & '>' that passes",
+                           "When scenario are performed",
+                           "Then failure should result",
+                           "Then the order of events should be '<✓ {✓ [✓ scenarioA✗ ]✓ }✓ >✓'")
                 .createScenario();
 
         final SampleStepsPojo pojo = new SampleStepsPojo();
@@ -129,18 +129,17 @@ public class EvolvingDogfoodTest {
             }
         }, monitor);
 
-        if(!passed) {
-            fail("scenario did not pass: " + monitor.eventString());
-        }
+        assertThat("scenario did not pass: " + monitor.eventString(),
+                passed, is(equalTo(true)));
 
-        assertEquals("Sc( Given passing scenario 'scenarioA'✓ " +
+        assertThat(monitor.eventString(), is(equalTo("Sc( Given passing scenario 'scenarioA'✓ " +
                 "Given a containing before and after scenario '[' & ']' that passes✓ " +
                 "Given a containing before and after scenario '{' & '}' that passes✓ " +
                 "Given a containing before and after scenario '<' & '>' that passes✓ " +
                 "When scenario are performed✓ " +
                 "Then failure should result✓ " +
-                "Then the order of events should be '<✓ {✓ [✓ scenarioA✗ ]✓ }✓ >✓'✓ ✓)",
-                monitor.eventString());
+                "Then the order of events should be '<✓ {✓ [✓ scenarioA✗ ]✓ }✓ >✓'✓ ✓)"
+                )));
     }
 
 }

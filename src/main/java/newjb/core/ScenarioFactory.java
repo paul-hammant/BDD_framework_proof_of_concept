@@ -7,11 +7,15 @@ import java.util.regex.Pattern;
 
 public class ScenarioFactory {
     private final Class<?>[] stepsClasses;
-    private final String[] steps;
+    private String[] steps = new String[0];
 
-    public ScenarioFactory(Class<?>[] stepsClasses, String... steps) {
+    public ScenarioFactory(Class<?>... stepsClasses) {
         this.stepsClasses = stepsClasses;
+    }
+
+    public ScenarioFactory withSteps(String... steps) {
         this.steps = steps;
+        return this;
     }
 
     public Scenario createScenario() {
